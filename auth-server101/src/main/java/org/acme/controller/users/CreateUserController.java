@@ -2,6 +2,7 @@ package org.acme.controller.users;
 
 
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
+import io.quarkus.security.runtime.SecurityConfig;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

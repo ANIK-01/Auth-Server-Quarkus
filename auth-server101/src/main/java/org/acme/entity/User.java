@@ -1,12 +1,15 @@
 package org.acme.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import org.acme.models.GenderValues;
+
+import java.security.Security;
 
 @Entity
 public class User {
@@ -63,7 +66,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = BcryptUtil.bcryptHash(password);
     }
 
     public GenderValues getGender() {
