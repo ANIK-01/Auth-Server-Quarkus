@@ -18,70 +18,95 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
 
     @JsonProperty("id")
-    Long id;
+    Long Id;
+
+    @NotNull
+    @JsonProperty("company_id")
+    Long CompanyId;
 
     @NotNull
     @JsonProperty("name")
-    String name;
+    String Name;
 
     @NotNull
     @JsonProperty("email")
-    String email;
+    String Email;
 
     @NotNull
     @JsonProperty("password")
-    String password;
+    String Password;
+
+    @NotNull
+    @JsonProperty("role_id")
+    String RoleId;
+
     @JsonProperty("gender")
-    GenderValues gender;
+    GenderValues Gender;
 
     @JsonProperty("age")
-    int age;
+    int Age;
 
     public Long getId() {
-        return id;
+        return Id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.Id = id;
+    }
+
+    public Long getCompanyId() {
+        return CompanyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.CompanyId = companyId;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.Email = email;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
     public void setPassword(String password) {
-        this.password = BcryptUtil.bcryptHash(password);
+        this.Password = BcryptUtil.bcryptHash(password);
+    }
+
+    public String getRoleId() {
+        return RoleId;
+    }
+
+    public void setRoleId(String roleId) {
+        RoleId = roleId;
     }
 
     public GenderValues getGender() {
-        return gender;
+        return Gender;
     }
 
     public void setGender(GenderValues gender) {
-        this.gender = gender;
+        this.Gender = gender;
     }
 
     public int getAge() {
-        return age;
+        return Age;
     }
 
     public void setAge(int age) {
-        this.age = age;
+        this.Age = age;
     }
 }
