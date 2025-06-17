@@ -1,14 +1,11 @@
 package org.acme.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.GenderValues;
-
-import java.security.Security;
 
 @Entity
 @Getter

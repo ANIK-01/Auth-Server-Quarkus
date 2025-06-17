@@ -9,6 +9,6 @@ import org.acme.entity.Company;
 public class CompanyRepository extends EntityRepositoryBase<Company, Long>{
 
     public Uni<Company> getByEmailAsync(String email) {
-        return find("email", email).firstResult();
+        return find("CompanyEmail", email).firstResult();
     }
 }

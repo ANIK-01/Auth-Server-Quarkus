@@ -17,7 +17,7 @@ public abstract class EntityRepositoryBase<T, ID> implements PanacheRepositoryBa
     }
 
     public Uni<T> getByNameAsync(String name){
-        return find("name", name).firstResult();
+        return find("Name", name).firstResult();
     }
 }
 
