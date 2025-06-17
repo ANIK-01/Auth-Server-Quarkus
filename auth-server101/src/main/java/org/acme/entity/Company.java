@@ -1,98 +1,49 @@
 package org.acme.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.acme.models.IndustryTypes;
 
 @Entity
+@Getter
+@Setter
 public class Company {
-
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
+    @Column(name = "id")
     Long Id;
 
     @NotNull
     @JsonProperty("name")
+    @Column(name = "name")
     String Name;
 
     @JsonProperty("description")
+    @Column(name = "description")
     String Description;
 
     @NotNull
     @JsonProperty("address")
+    @Column(name = "address")
     String Address;
 
     @NotNull
     @JsonProperty("industry")
+    @Column(name = "industry")
+    @Enumerated(EnumType.STRING)
     IndustryTypes Industry;
 
     @NotNull
     @JsonProperty("company_email")
+    @Column(name = "company_email")
     String CompanyEmail;
 
     @JsonProperty("employee_count")
+    @Column(name = "employee_count")
     int EmployeeCount;
-
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String address) {
-        Address = address;
-    }
-
-    public IndustryTypes getIndustry() {
-        return Industry;
-    }
-
-    public void setIndustry(IndustryTypes industry) {
-        Industry = industry;
-    }
-
-    public String getCompanyEmail() {
-        return CompanyEmail;
-    }
-
-    public void setCompanyEmail(String companyEmail) {
-        CompanyEmail = companyEmail;
-    }
-
-    public int getEmployeeCount() {
-        return EmployeeCount;
-    }
-
-    public void setEmployeeCount(int employeeCount) {
-        EmployeeCount = employeeCount;
-    }
 }

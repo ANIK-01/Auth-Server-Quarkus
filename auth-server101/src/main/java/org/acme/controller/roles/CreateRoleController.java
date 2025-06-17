@@ -1,8 +1,7 @@
-package org.acme.controller.users;
+package org.acme.controller.roles;
 
 
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
-import io.quarkus.security.runtime.SecurityConfig;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -13,37 +12,38 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.dto.StatusMessage;
-import org.acme.entity.User;
-import org.acme.repository.UserRepository;
+import org.acme.entity.Role;
+import org.acme.repository.EntityRepositoryBase;
+import org.acme.repository.RoleRepository;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 
-@Path("/user")
-public class CreateUserController {
+@Path("/role")
+public class CreateRoleController {
 
     @Inject
-    UserRepository userRepository;
+    RoleRepository roleRepository;
 
     @POST
-    @Tags(value = @Tag(name="Users", description="User Operations"))
+    @Tags(value = @Tag(name="Roles", description="Role Manages"))
     @WithTransaction
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> createUser(@Valid User user) {
-        return userRepository.getByEmailAsync(user.getEmail())
-                .flatMap(existingUser -> {
-                    if (existingUser != null) return Uni.createFrom().item(
+    public Uni<Response> createRole(@Valid Role role) {
+        return roleRepository.getByNameAsync(role.getName())
+                .flatMap(existingRole -> {
+                    if (existingRole != null) return Uni.createFrom().item(
                             Response.status(Response.Status.CONFLICT)
-                                    .entity(new StatusMessage<User>("Email already exists"))
+                                    .entity(new StatusMessage<Role>("Name already exists"))
                                     .build()
                     );
-                    return userRepository.persist(user)
+                    return roleRepository.persist(role)
                             .map(v -> Response.status(Response.Status.CREATED)
-                                    .entity(new StatusMessage<>(user))
+                                    .entity(new StatusMessage<>(role))
                                     .build())
                             .onFailure().recoverWithItem(
                                     Response.status(Response.Status.BAD_REQUEST)
-                                            .entity(new StatusMessage<User>("Invalid Request"))
+                                            .entity(new StatusMessage<Role>("Invalid Request"))
                                             .build()
                             );
                 });
