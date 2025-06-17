@@ -9,6 +9,6 @@ import org.acme.entity.User;
 public class UserRepository extends EntityRepositoryBase<User, Long>{
 
     public Uni<User> getByEmailAsync(String email) {
-        return find("email", email).firstResult();
+        return find("Email", email).firstResult();
     }
 }

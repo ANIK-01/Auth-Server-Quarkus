@@ -1,4 +1,4 @@
-package org.acme.controller.users;
+package org.acme.controller.compaines;
 
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Uni;
@@ -10,34 +10,34 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.dto.StatusMessage;
-import org.acme.entity.User;
-import org.acme.repository.UserRepository;
+import org.acme.entity.Company;
+import org.acme.repository.CompanyRepository;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 
-@Path("/user")
-public class GetUserByIdController {
+@Path("/company")
+public class GetCompanyByIdController {
 
     @Inject
-    UserRepository userRepository;
+    CompanyRepository companyRepository;
 
     @GET
-    @Tags(value = @Tag(name="Users", description="User Operations"))
+    @Tags(value = @Tag(name="Companies", description="Company Operations"))
     @Path("/{id}")
     @WithTransaction
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> getUserById(@PathParam("id") Long id) {
-        return userRepository.findById(id)
-                .flatMap(user -> {
-                    if (user == null) {
+    public Uni<Response> getCompanyById(@PathParam("id") Long id) {
+        return companyRepository.findById(id)
+                .flatMap(company -> {
+                    if (company == null) {
                         return Uni.createFrom().item(
                                 Response.status(Response.Status.NOT_FOUND)
-                                        .entity(new StatusMessage<User>("User not found"))
+                                        .entity(new StatusMessage<Company>("Company not found"))
                                         .build()
                         );
                     }
                     return Uni.createFrom().item(
-                            Response.ok(new StatusMessage<>(user)).build()
+                            Response.ok(new StatusMessage<>(company)).build()
                     );
                 });
     }

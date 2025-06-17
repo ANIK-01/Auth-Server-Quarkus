@@ -14,6 +14,8 @@ import jakarta.ws.rs.core.Response;
 import org.acme.dto.StatusMessage;
 import org.acme.entity.User;
 import org.acme.repository.UserRepository;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 
 @Path("/user")
 public class UpdateUserByIdController {
@@ -22,6 +24,7 @@ public class UpdateUserByIdController {
     UserRepository userRepository;
 
     @PUT
+    @Tags(value = @Tag(name="Users", description="User Operations"))
     @Path("/{id}")
     @WithTransaction
     @Consumes(MediaType.APPLICATION_JSON)

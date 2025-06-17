@@ -1,4 +1,4 @@
-package org.acme.controller.users;
+package org.acme.controller.compaines;
 
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Uni;
@@ -9,29 +9,27 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.dto.StatusMessage;
-import org.acme.entity.User;
-import org.acme.repository.UserRepository;
+import org.acme.entity.Company;
+import org.acme.repository.CompanyRepository;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 
-import java.util.List;
-
-@Path("/user")
-public class GetAllUsersController {
+@Path("/company")
+public class GetAllCompaniesController {
 
     @Inject
-    UserRepository userRepository;
+    CompanyRepository companyRepository;
 
     @GET
-    @Tags(value = @Tag(name="Users", description="User Operations"))
+    @Tags(value = @Tag(name="Companies", description="Company Operations"))
     @WithTransaction
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> getAllUsers() {
-        return userRepository.listAll()
-                .map(users -> Response.ok(new StatusMessage<>(users)).build())
+    public Uni<Response> getAllCompanies() {
+        return companyRepository.listAll()
+                .map(companies -> Response.ok(new StatusMessage<>(companies)).build())
                 .onFailure().recoverWithItem(
                     Response.status(Response.Status.BAD_REQUEST)
-                            .entity(new StatusMessage<User>("Invalid Request"))
+                            .entity(new StatusMessage<Company>("Invalid Request"))
                             .build()
                 );
     }

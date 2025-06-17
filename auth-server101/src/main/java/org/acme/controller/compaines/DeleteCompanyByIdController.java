@@ -1,43 +1,42 @@
-package org.acme.controller.users;
+package org.acme.controller.compaines;
 
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 import org.acme.dto.StatusMessage;
-import org.acme.entity.User;
-import org.acme.repository.UserRepository;
+import org.acme.entity.Company;
+import org.acme.repository.CompanyRepository;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 
-@Path("/user")
-public class DeleteUserByIdController {
+@Path("/company")
+public class DeleteCompanyByIdController {
     @Inject
-    UserRepository userRepository;
+    CompanyRepository companyRepository;
 
     @DELETE
-    @Tags(value = @Tag(name="Users", description="User Operations"))
+    @Tags(value = @Tag(name="Companies", description="Company Operations"))
     @Path("/{id}")
     @WithTransaction
-    public Uni<Response> deleteUser(@PathParam("id") Long id) {
-        return userRepository.findById(id)
-                .flatMap(user -> {
-                    if (user == null) {
+    public Uni<Response> deleteCompany(@PathParam("id") Long id) {
+        return companyRepository.findById(id)
+                .flatMap(company -> {
+                    if (company == null) {
                         return Uni.createFrom().item(
                                 Response.status(Response.Status.NOT_FOUND)
-                                        .entity(new StatusMessage<User>("User not found"))
+                                        .entity(new StatusMessage<Company>("Company not found"))
                                         .build()
                         );
                     }
-                    return userRepository.deleteById(id)
+                    return companyRepository.deleteById(id)
                             .map(v -> Response.ok(new StatusMessage<>(true)).build())
                             .onFailure().recoverWithItem(
                                     Response.status(Response.Status.BAD_REQUEST)
-                                            .entity(new StatusMessage<User>("Invalid Request"))
+                                            .entity(new StatusMessage<Company>("Invalid Request"))
                                             .build()
                             );
                 });
